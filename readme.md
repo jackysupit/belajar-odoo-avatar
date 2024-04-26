@@ -1,6 +1,6 @@
-*----------------------------------* 
-# Panduan Programming Odoo
-*----------------------------------* 
+*------------------------------------------------------------* 
+## Panduan Programming Odoo
+*------------------------------------------------------------* 
 
 1. Setiap perubahan di python, harus direstart
 2. Perubahan di XML, biasanya cukup hard reset views
