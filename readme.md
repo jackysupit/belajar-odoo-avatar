@@ -39,4 +39,4 @@
 2. Kelas akan berjalan dengan sangat cepat, karena kita enggak punya waktu banyak. Jika mencatat membuatmu ketinggalan, tidak bisa memperhatikan dengan baik, lebih baik tidak usah mencatat. Perhatikan saja. Nanti cukup clone repo, coba-coba sambil nyontek contoh yang sudah dibuat. Kalau bingung silahkan konsultasi via WA ***(bikin group WA, biar 1x jawab, semua memperhatikan)***
 
 ### <span style="color:yellowgreen;"># Wisdom</span>
-1. programming itu menyenangkan, hanya jika menggunakan odoo. :))
+1. programming itu menyenangkan, jika menggunakan odoo. :))
