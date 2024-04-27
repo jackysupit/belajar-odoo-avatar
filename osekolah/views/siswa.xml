@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+    
+        <record id= "osekolah_action_siswa" model="ir.actions.act_window">
+            <field name="name">Master Siswa</field>
+            <field name="res_model">osekolah.siswa</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem name="Sekolah" id="osekolah.menu_utama" web_icon="osekolah,static/images/harapan-bunda.jpeg"
+        />
+        
+        <menuitem name="Siswa" id="osekolah.menu_siswa" parent="osekolah.menu_utama"
+            action="osekolah_action_siswa"
+        />
+
+    </data>
+</odoo>
