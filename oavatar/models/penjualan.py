@@ -26,7 +26,17 @@ class Penjualan(models.Model):
     customer_id =  fields.Many2one(comodel_name='res.partner', ondelete='restrict')
     tgl = fields.Date()
 
-    total = fields.Float()
+    total = fields.Float(compute="compute_total", store=True)
+    
+    @api.depends('produk_ids')
+    def compute_total(self):
+        for record in self:
+            total = 0
+            for produk in record.produk_ids:
+                # total = total + produk.subtotal
+                total += produk.subtotal
+
+            record.total = total
 
     produk_ids = fields.One2many(comodel_name='oavatar.penjualan.produk', inverse_name='penjualan_id' )
 
