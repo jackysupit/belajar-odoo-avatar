@@ -23,7 +23,7 @@ class Penjualan(models.Model):
         cascade = jika PT Andi Jaya dihapus, maka data transaksi otomatis dihapus juga 
     """
     # customer =  fields.Many2one(comodel_name='res.partner', ondelete='cascade')
-    customer =  fields.Many2one(comodel_name='res.partner', ondelete='restrict')
+    customer_id =  fields.Many2one(comodel_name='res.partner', ondelete='restrict')
     tgl = fields.Date()
 
     total = fields.Float()

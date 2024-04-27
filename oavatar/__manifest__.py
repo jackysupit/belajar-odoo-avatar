@@ -11,6 +11,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/penjualan.xml',
+        'views/menu.xml',
     ],
     'application': True
 }
