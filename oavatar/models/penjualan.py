@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models, _
+from datetime import datetime, timedelta
 
 """
 header 
@@ -14,7 +15,33 @@ class Penjualan(models.Model):
     _name = 'oavatar.penjualan' 
     _description = 'Ini adalah transkasi penjualan'
 
-    name = fields.Char('No Penjualan')
+    """
+        convention odoo 
+        biasanya jika membuat auto sequence 
+        bikin field = default value = New 
+        readonly 
+        store ke database 
+    """
+    name = fields.Char('No Transaksi', default = "New", readonly=True, store=True)
+
+    notes = fields.Text(default="ini adalah value default untuk field: notes")
+    
+    #misal tgl default adalah hari ini
+    #misal tanggal kirim adalah hari ini + 3 hari 
+    def default_tgl(self):
+        tgl = fields.Date.today()
+        return tgl
+
+    # def default_tgl_kirim(self):
+    #     tgl = fields.Date.today()
+    #     tgl_kirim = tgl + timedelta(days=3)
+    #     return tgl_kirim
+
+    tgl = fields.Date(default=fields.Date.today())
+    tgl_kirim = fields.Date(default=datetime.today() + timedelta(days=3))
+
+    # tgl = fields.Date(default='default_tgl')
+    # tgl_kirim = fields.Text(default='default_tgl_kirim')
 
     """
         ondelete = restrict = jika sudah ada data penjualan milik Customer PT Andi Jaya
@@ -22,11 +49,12 @@ class Penjualan(models.Model):
 
         cascade = jika PT Andi Jaya dihapus, maka data transaksi otomatis dihapus juga 
     """
-    # customer =  fields.Many2one(comodel_name='res.partner', ondelete='cascade')
+    # customer =  fields.Many2on(comodel_name='res.partner', ondelete='cascade')
     customer_id =  fields.Many2one(comodel_name='res.partner', ondelete='restrict')
-    tgl = fields.Date()
 
     total = fields.Float(compute="compute_total", store=True)
+    #default value 
+    
     
     @api.depends('produk_ids')
     def compute_total(self):
@@ -41,6 +69,48 @@ class Penjualan(models.Model):
     produk_ids = fields.One2many(comodel_name='oavatar.penjualan.produk', inverse_name='penjualan_id' )
 
 
+    # pas di klik save untuk create new 
+    #vals = adalah semua value yang akan disimpan ke dalam datbase 
+    """
+        bentuknya object 
+
+        contoh: 
+
+        {
+            'name': 'Apel',
+            'harga': 5000,
+        }
+    """
+    @api.model
+    def create(self, vals):
+        # Agregar codigo de validacion aca
+        
+        #versi php: if (isset($vals["nae"])) {}
+        #versi python:  if 'name' in vals:
+
+        """
+            jika vals['name'] == '' atau vals['name'] == 'New'
+                maka ganti vals['name'] = dengan auto sequence 
+        """
+        if vals.get('name') != '' or vals.get('name') == 'New':
+
+            # Ambil tanggal hari ini dalam format yyyymmdd
+            tanggal_hari_ini = datetime.today().strftime('%Y%m%d')
+            name  = self.env['ir.sequence'].next_by_code('penjualan_seq') 
+
+            # vals['name'] = name + tanggal_hari_ini
+            vals['name'] = "{}-{}".format(name, tanggal_hari_ini)
+
+        return super(Penjualan, self).create(vals)
+
+
+    # pas di klik save, untuk edit 
+    def write(self, vals):
+        # Agregar codigo de validacion aca
+        
+        return super(Penjualan, self).write(vals)
+
+
 
 class PenjualanProduk(models.Model):
     _name = 'oavatar.penjualan.produk' 
@@ -50,6 +120,13 @@ class PenjualanProduk(models.Model):
     penjualan_id = fields.Many2one(comodel_name='oavatar.penjualan', ondelete='restrict')
 
     produk_id = fields.Many2one(comodel_name='oavatar.produk', ondelete='restrict')
+
+    state = fields.Selection(string='Status', selection=[
+        ('good', 'Good'),
+        ('bad', 'Bad'),
+    ], related="produk_id.state")
+
+
     qty = fields.Integer()
     
     """

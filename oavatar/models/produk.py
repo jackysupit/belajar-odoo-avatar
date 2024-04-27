@@ -10,10 +10,10 @@ class Produk(models.Model):
     _description = 'Ini adalah master produk'
 
     #ini untuk memaksa odoo, jangan pakai field name, tapi field no_transaksi
-    _rec_name = "no_transaksi"
+    # _rec_name = "no_transaksi"
 
     #nama di odoo = name 
-    no_transaksi = fields.Char()
+    no_transaksi = fields.Char(string="Kode Produk")
 
     name = fields.Char('Nama Produk', required=True)
 

@@ -24,10 +24,15 @@
                 <form string="">
                     <sheet>
                         <group>
-                            <field name="name"/>
-                            <field name="tgl"/>
-                            <field name="customer_id"/>
-                            <field name="total"/>
+                            <group>
+                                <field name="name"/>
+                                <field name="customer_id"/>
+                                <field name="total"/>
+                            </group>
+                            <group>
+                                <field name="tgl"/>
+                                <field name="tgl_kirim"/>
+                            </group>
                         </group>
                         <!-- field one2many -->
                         <field name="produk_ids">
@@ -36,20 +41,31 @@
                                 <field name="qty"/>
                                 <field name="harga_transaksi"/>
                                 <field name="subtotal"/>
+                                <field name="state" />
                             </tree>
                             <form>
                                 <group col="3">
                                     <group class="bg-success">
                                         <field name="produk_id"/>
                                         <field name="qty"/>
-                                    </group>
-                                    <group class="bg-danger">
                                         <field name="harga_transaksi"/>
                                         <field name="subtotal"/>
+                                        
+                                        <!-- membuat invisible manual -->
+                                        <!-- <field name="state" invisible="1"/> -->
+                                        <field name="state" />
+
                                     </group>
-                                    <group class="bg-info">
-                                        <field name="produk_id"/>
-                                        <field name="qty"/>
+
+                                    <!-- invisible dinamis berdasarkan field state -->
+                                    <!-- jika state != bad, maka akan hidden -->
+                                    <group class="bg-danger" attrs="{'invisible':[('state','!=','bad')]}">
+                                        <h1>ini contoh element bad</h1>
+                                    </group>
+
+                                    <!-- jika state != good, maka akan hidden -->
+                                    <group class="bg-info" attrs="{'invisible':[('state','!=','good')]}">
+                                        <h1>ini contoh element good</h1>
                                     </group>                                    
                                 </group>
                             </form>

@@ -9,7 +9,10 @@
     'website':  'avatar.co.id',
     'license': 'AGPL-3',
     'data': [
-        'security/ir.model.access.csv',
+        'security/ir.model.access.csv', #biasanya sec paling atas
+        
+        'data/penjualan_seq.xml',
+
         'views/penjualan.xml',
         'views/menu.xml',
     ],
