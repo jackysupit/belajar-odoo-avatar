@@ -3,6 +3,8 @@
 
 ## membuat module baru
     - masuk ke menu apps -> update app list -> activate 
+    - config odoo.conf, di windows ada di: program files/odoo/server/odoo.conf
+    - di unix, bebas
 
 ## membuat model baru
     - nama file sebaiknya sama dengan model

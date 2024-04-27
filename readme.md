@@ -21,6 +21,7 @@
     contoh: _inherit = 'nama_module.nama_table'
 6. Rekomendasi gunakan spaces 4
 
+
 ### <span style="color:yellowgreen;"># Tips</span>
 1. Gunakan git untuk bekerja, titik.
     - repo ini ada di: https://github.com/jackysupit/belajar-odoo-avatar.git
