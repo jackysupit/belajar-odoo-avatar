@@ -10,7 +10,9 @@
     'license': 'AGPL-3',
     'data': [
         'security/ir.model.access.csv',
-    ]
+        'views/penjualan.xml',
+    ],
+    'application': True
 }
 
 # /Users/jeki/work/belajar/avatar/oavatar/__manifest__.py

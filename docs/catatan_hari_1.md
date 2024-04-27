@@ -11,7 +11,7 @@
     - latihan: buat field name, harga, warna, keterangan 
     - set _name dan _description
     - masukkan __init__.py
-    - set security/ir.model.access.csv
+    - jangan lupa, setelah creat model, selalu set security/ir.model.access.csv
 
 ## mengenal macam2 field
     - char

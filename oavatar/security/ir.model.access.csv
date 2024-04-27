@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_untuk_user,access_untuk_user,model_oavatar_produk,base.group_user,1,1,1,0
 access_untuk_admin,access_untuk_admin,model_oavatar_produk,base.group_user,1,1,1,1
+access_untuk_penjualan_user,access_untuk_penjualan_user,model_oavatar_penjualan,base.group_user,1,1,1,1
+access_untuk_penjualan_produk_user,access_untuk_penjualan_produk_user,model_oavatar_penjualan_produk,base.group_user,1,1,1,1

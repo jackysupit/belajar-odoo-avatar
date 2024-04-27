@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <record id= "oavatar_action_produk" model="ir.actions.act_window">
+            <field name="name">Avatar Produk</field>
+            <field name="res_model">oavatar.produk</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <record id= "oavatar_action_penjualan" model="ir.actions.act_window">
+            <field name="name">Avatar Penjualan</field>
+            <field name="res_model">oavatar.penjualan</field>
+            <field name="view_mode">tree,form,kanban</field>
+        </record>
+<!-- 
+
+        <menuitem id="menu_xxx" name="XXX" action="action_x1" sequence="10" web_icon="obalimoon,static/src/img/ln_list.png"/>
+        <menuitem id="menu_x1" name="X1" action="action_x1" parent="menu_xxx" sequence="21" /> 
+         -->
+
+        <menuitem name="Avatar Home" id="oavatar.menu_utama" web_icon="oavatar,static/images/avatar.jpeg"
+        action="oavatar_action_produk"
+        />
+        
+        <menuitem name="Produk" id="oavatar.menu_produk" parent="oavatar.menu_utama"
+            action="oavatar_action_produk"
+        />
+        
+        <menuitem name="Penjualan" id="oavatar.menu_penjualan" parent="oavatar.menu_utama"
+            action="oavatar_action_penjualan"
+        />
+
+
+        <menuitem name="Avatar" id="oavatar.menu_utama2" web_icon="oavatar,static/images/avatar.jpeg"
+        action="oavatar_action_produk"
+        />
+        
+        <menuitem name="Produk" id="oavatar.menu_produk2" parent="oavatar.menu_utama2"
+            action="oavatar_action_produk"
+        />
+        
+        <menuitem name="Penjualan" id="oavatar.menu_penjualan2" parent="oavatar.menu_utama2"
+            action="oavatar_action_penjualan"
+        />
+
+
+
+<!--         
+        <a href="#">
+            Avatar Home
+        </a>
+        <a href="google.com">Produk</a> -->
+    </data>
+</odoo>
