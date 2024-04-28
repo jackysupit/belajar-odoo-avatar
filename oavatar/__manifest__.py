@@ -12,6 +12,7 @@
         'security/ir.model.access.csv', #biasanya sec paling atas
         
         'data/penjualan_seq.xml',
+        'views/pesan.xml',
 
         'views/penjualan.xml',
         'views/menu.xml',

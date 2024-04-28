@@ -54,6 +54,9 @@ class Penjualan(models.Model):
 
     total = fields.Float(compute="compute_total", store=True)
     #default value 
+
+    notes = fields.Text()
+    notes2 = fields.Text()
     
     
     @api.depends('produk_ids')
@@ -83,6 +86,8 @@ class Penjualan(models.Model):
     """
     @api.model
     def create(self, vals):
+
+
         # Agregar codigo de validacion aca
         
         #versi php: if (isset($vals["nae"])) {}
@@ -101,6 +106,22 @@ class Penjualan(models.Model):
             # vals['name'] = name + tanggal_hari_ini
             vals['name'] = "{}-{}".format(name, tanggal_hari_ini)
 
+        produk_id = 1
+        produk = self.env['oavatar.produk'].browse(produk_id)
+        produk.notes = 'do something'
+
+        """
+            beberapa cara meng-edit data di odoo 
+                1. record.field = value 
+
+                values = {
+                    'field1': value,
+                    'field2': value
+                }
+                2. record.write(values)
+
+        """
+
         return super(Penjualan, self).create(vals)
 
 
@@ -108,65 +129,72 @@ class Penjualan(models.Model):
     def write(self, vals):
         # Agregar codigo de validacion aca
         
-        return super(Penjualan, self).write(vals)
+        """
+            setiap kali data di edit, maka ganti notes menjadi:
+            'Data terakhir di ubah oleh : {} pada tanggal {}'
+        """
+
+        username = self.env.user.name
+        # tanggal_sekarang = fields.Date.today()
+        
+        tanggal_sekarang = datetime.now()
+        notes = 'Data terakhir di ubah oleh : {} pada tanggal {}'.format(username, tanggal_sekarang)
+        vals['notes'] = notes
+
+        #jika berhasil akan return True
+        #jika error, maka odoo akan otomatis menampilkan errornya kenapa, kita enggak usah capek-capek ngurusin elsenya
+        hasil = super(Penjualan, self).write(vals)
+
+        # ini adalah cara lain dalam meng-edit isi data
+        # jangan meng-edit record ini, di dalam func write() milik model yang sama, jadi endless loop
+        # self.notes = notes #yang dilakukan, ini sebenarnya odoo akan menjalakan func write({'notes':notes})
+
+        return True
 
 
+    # Method to open the popup form
+    def open_popup_form(self):
 
-class PenjualanProduk(models.Model):
-    _name = 'oavatar.penjualan.produk' 
-    _description = 'Ini adalah produk-produk yang dijual'
-
-    # trans_id = field.header 
-    penjualan_id = fields.Many2one(comodel_name='oavatar.penjualan', ondelete='restrict')
-
-    produk_id = fields.Many2one(comodel_name='oavatar.produk', ondelete='restrict')
-
-    state = fields.Selection(string='Status', selection=[
-        ('good', 'Good'),
-        ('bad', 'Bad'),
-    ], related="produk_id.state")
+        # self = current record
+        msg = 'Menampilkan popup milik data: {} '.format(self.name)
 
 
-    qty = fields.Integer()
-    
-    """
-        harga_transaksi = otomatis ikut harga produk
-    """
-    harga_transaksi = fields.Float(related="produk_id.harga", store=True)
-
-    """
-        subtotal = otomatis harga x qty 
-    """
-    subtotal = fields.Float(compute="compute_subtotal", store=True)
-
-    """
-         self = context milik class ini, isinya selalu adalah array[record]
-         walaupun hanya 1, tetep bentuknya array 
-         tapi kelebihan di odoo, kalau ada data model array, isinya hanya 1, otomatis bisa kita perlakukan seperti object 
-
-         contoh:
-            rec = record produk mangga 
-                print(rec.name) # mangga 
-
-            rec = multi record produk mangga dan apel 
-                for satu in rec:
-                    print(satu.name) # mangga, apel 
-    """
-
-    @api.depends('qty', 'harga_transaksi')
-    def compute_subtotal(self):
-        print("nama model = ", self._name)
-        print("nama description = ", self._description)
-
-        for record in self:
-            record.subtotal = record.qty * record.harga_transaksi
+        # mode create new 
+        return {
+            'name': 'Berhasil',
+            'type': 'ir.actions.act_window',
+            'res_model': 'oavatar.pesan',  # Ganti dengan nama model Anda
+            'view_mode': 'form',    # mode form, bukan tree
+            'target': 'new',    # akan muncul di popup
+            'context': {
+                'default_name': msg
+            }
+        }
 
 
-    """
-        field related dan compute 
-        - otomatis readonly 
-        - tidak tersimpan di database 
-            - tidak bisa digunakan untuk filter, search, group by 
+        # # mode popup readonly
+        # return {
+        #     'name': 'Berhasil',
+        #     'type': 'ir.actions.act_window',
+        #     'res_model': 'oavatar.pesan',  # Ganti dengan nama model Anda
+        #     'view_mode': 'form',    # mode form, bukan tree
+        #     'target': 'new',    # akan muncul di popup
+        #     'res_id': 1, # id milik record yang akan ditampilkan
+        #     'create': False,
+        #     'edit': False,
+        # }
 
-    """
+
+        # # mode popup boleh edit
+        # return {
+        #     'name': 'Berhasil',
+        #     'type': 'ir.actions.act_window',
+        #     'res_model': 'oavatar.pesan',  # Ganti dengan nama model Anda
+        #     'view_mode': 'form',    # mode form, bukan tree
+        #     'target': 'new',    # akan muncul di popup
+        #     'res_id': 1, # id milik record yang akan ditampilkan
+        #     'create': False,
+        #     'edit': True,
+        # }
+
 

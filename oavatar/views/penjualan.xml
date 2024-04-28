@@ -32,8 +32,17 @@
                             <group>
                                 <field name="tgl"/>
                                 <field name="tgl_kirim"/>
+
+                                <button name="open_popup_form" type="object" string="Tampilkan Popup" class="btn-primary" />
                             </group>
                         </group>
+
+                        <group>
+                            <!-- force save = memaksa odoo, untuk memasukkan field readonly ke dalam data yang di POST ke backend -->
+                            <field name="notes" readonly="1" force_save="True"/>
+                            <field name="notes2" readonly="1" force_save="True"/>
+                        </group>
+
                         <!-- field one2many -->
                         <field name="produk_ids">
                             <tree>
